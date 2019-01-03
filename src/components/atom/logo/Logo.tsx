@@ -12,7 +12,7 @@ const Logo: React.SFC<{}> = () => {
 
   return (
     <LogoComponent>
-      <Link to="/">Lify</Link>
+      <Link to="/">Jeff</Link>
     </LogoComponent>
   );
 };
