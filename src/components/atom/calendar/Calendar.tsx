@@ -1,14 +1,20 @@
 import * as dateFns from "date-fns";
 import * as React from 'react';
 
+import { WorkHistory } from "src/store/modules/work";
+
 import "./Calendar.scss";
+
+interface Props {
+  data: WorkHistory[];
+}
 
 interface State {
   currentMonth: Date;
   selectedDate: Date;
 }
 
-class Calendar extends React.Component<{}, State> {
+class Calendar extends React.Component<Props, State> {
   public state: State = {
     currentMonth: new Date(),
     selectedDate: new Date()
@@ -71,6 +77,7 @@ class Calendar extends React.Component<{}, State> {
       for (let i = 0; i < 7; i++) {
         formattedDate = dateFns.format(day, dateFormat);
         const cloneDay = day;
+        const hasWorkTime = this.hasWorkTime(day);
 
         days.push(
           <div
@@ -84,8 +91,7 @@ class Calendar extends React.Component<{}, State> {
             onClick={() => this.onDateClick(cloneDay) }
           >
             <span className="number">{formattedDate}</span>
-            { dateFns.isSameMonth(day, monthStart) ? <span className="work-time">3시간</span> : '' }
-            {/* <span className="bg">{formattedDate}</span> */}
+            { hasWorkTime !== -1 ? <span className="work-time">{this.props.data[hasWorkTime].workTime}시간</span> : '' }
           </div>
         );
         day = dateFns.addDays(day, 1);
@@ -100,6 +106,11 @@ class Calendar extends React.Component<{}, State> {
     }
 
     return <div className="body">{rows}</div>;
+  }
+
+  public hasWorkTime = (day: Date) => {
+    const formattedDate = dateFns.format(day, 'YYYY-MM-DD');
+    return this.props.data.findIndex((index) => index.workDate === formattedDate);
   }
 
   public onDateClick = (day: Date) => {
