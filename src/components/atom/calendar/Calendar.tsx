@@ -1,4 +1,5 @@
 import * as dateFns from "date-fns";
+import * as moment from "moment";
 import * as React from 'react';
 
 import { WorkHistory } from "src/store/modules/work";
@@ -7,6 +8,9 @@ import "./Calendar.scss";
 
 interface Props {
   data: WorkHistory[];
+  selectMonth: string,
+  moveToNextMonth: () => void,
+  moveToPrevMonth: () => void,
 }
 
 interface State {
@@ -16,7 +20,7 @@ interface State {
 
 class Calendar extends React.Component<Props, State> {
   public state: State = {
-    currentMonth: new Date(),
+    currentMonth: moment(this.props.selectMonth).toDate(),
     selectedDate: new Date()
   };
 
@@ -121,12 +125,14 @@ class Calendar extends React.Component<Props, State> {
     this.setState({
       currentMonth: dateFns.addMonths(this.state.currentMonth, 1)
     });
+    this.props.moveToNextMonth();
   };
 
   public prevMonth = () => {
     this.setState({
       currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
     });
+    this.props.moveToPrevMonth();
   };
 
   public render() {

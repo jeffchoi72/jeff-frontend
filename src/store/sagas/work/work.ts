@@ -4,8 +4,8 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { workApi } from 'src/lib/api';
 import { failWorkHistoriesByMonth, GET_WORK_HISTORIES_BY_MONTH, successWorkHistoriesByMonth } from "src/store/modules/work";
 
-export function* getWorkHistoriesByMonth(): SagaIterator {
-  const response = yield call(workApi.requestWorkHistoriesByMonth, { month: '2019-01' });
+export function* getWorkHistoriesByMonth({ payload }: any): SagaIterator {
+  const response = yield call(workApi.requestWorkHistoriesByMonth, payload);
 
   const { status, data: responseBodyData } = response;
 

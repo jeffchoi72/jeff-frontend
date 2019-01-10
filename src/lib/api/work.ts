@@ -1,6 +1,6 @@
 import { baseAxios } from '../axios';
 
-interface WorkHistoriesByMonthParam {
+export interface WorkHistoriesByMonthParam {
   month: string;
 }
 
