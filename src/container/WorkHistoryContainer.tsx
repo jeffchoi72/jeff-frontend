@@ -24,7 +24,7 @@ class WorkHistoryContainer extends React.Component<Props, State> {
 
   public componentDidMount() {
     console.log('componentDidMount');
-    this.props.requestWorkHistoriesByMonth({ month: this.state.selectedMonth });
+    this.requestSelectedMonth();
   }
 
   public moveToNextMonth = async () => {
@@ -33,7 +33,7 @@ class WorkHistoryContainer extends React.Component<Props, State> {
       selectedMonth: moment(selectedMonth).add('1', 'M').format('YYYY-MM')
     });
 
-    this.props.requestWorkHistoriesByMonth({ month: this.state.selectedMonth });
+    this.requestSelectedMonth();
   }
 
   public moveToPrevMonth = async () => {
@@ -42,6 +42,10 @@ class WorkHistoryContainer extends React.Component<Props, State> {
       selectedMonth: moment(selectedMonth).add('-1', 'M').format('YYYY-MM')
     });
 
+    this.requestSelectedMonth();
+  }
+
+  public requestSelectedMonth = () => {
     this.props.requestWorkHistoriesByMonth({ month: this.state.selectedMonth });
   }
 
