@@ -2,11 +2,11 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  text: string;
+  children: React.ReactNode;
 }
 
-const Title: React.SFC<Props> = ({ text }) => {
-  const TitleStyled = styled.span`
+const Title: React.SFC<Props> = ({ children }) => {
+  const TitleStyled = styled.div`
     font-size: 24px;
     font-weight: 500;
     color: #1F2124;
@@ -14,7 +14,7 @@ const Title: React.SFC<Props> = ({ text }) => {
 
   return (
     <TitleStyled>
-      { text }
+      { children }
     </TitleStyled>
   );
 };

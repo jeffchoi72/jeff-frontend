@@ -12,7 +12,7 @@ const WorkLogChart: React.SFC<{}> = () => {
 
   return (
     <div>
-      <Title text="일주일동안 기록한 영훈님의 업무시간 입니다"/>
+      <Title>일주일동안 기록한 영훈님의 업무시간 입니다</Title>
       <HorizontalBarWrap>
         <HorizontalBar />
       </HorizontalBarWrap>
