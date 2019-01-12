@@ -6,7 +6,7 @@
 
 ## 기능
 
-###/work/history
+### /work/history
 
 한달동안 기록한 업무시간을 볼 수 있는 페이지
 
