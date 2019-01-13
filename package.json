@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/react-modal": "^3.8.0",
     "axios": "^0.18.0",
     "chart.js": "^2.7.3",
     "classnames": "^2.2.6",
@@ -13,6 +14,7 @@
     "react": "^16.7.0",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.7.0",
+    "react-modal": "^3.8.1",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
     "react-scripts-scss-ts": "2.17.1",

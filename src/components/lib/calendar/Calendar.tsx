@@ -8,20 +8,20 @@ import "./Calendar.scss";
 
 interface Props {
   data: WorkHistory[];
-  selectMonth: string,
-  moveToNextMonth: () => void,
-  moveToPrevMonth: () => void,
+  selectMonth: string;
+  selectedDate: Date;
+  moveToNextMonth: () => void;
+  moveToPrevMonth: () => void;
+  handleChangeSelectedDay: (selectedDay: Date) => void;
 }
 
 interface State {
   currentMonth: Date;
-  selectedDate: Date;
 }
 
 class Calendar extends React.Component<Props, State> {
   public state: State = {
     currentMonth: moment(this.props.selectMonth).toDate(),
-    selectedDate: new Date()
   };
 
   public renderHeader() {
@@ -63,7 +63,8 @@ class Calendar extends React.Component<Props, State> {
   }
 
   public renderCells() {
-    const { currentMonth, selectedDate } = this.state;
+    const { currentMonth } = this.state;
+    const { selectedDate } = this.props;
 
     const monthStart = dateFns.startOfMonth(currentMonth);
     const monthEnd = dateFns.endOfMonth(monthStart);
@@ -117,8 +118,8 @@ class Calendar extends React.Component<Props, State> {
     return this.props.data.findIndex((index) => index.workDate === formattedDate);
   }
 
-  public onDateClick = (day: Date) => {
-    this.setState({ selectedDate: day });
+  public onDateClick = async (day: Date) => {
+    this.props.handleChangeSelectedDay(day);
   };
 
   public nextMonth = () => {

@@ -2,7 +2,7 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import WorkLogCalendar from 'src/components/molecules/workLogCalendar';
+import WorkLogCalendar from 'src/components/organisms/workLogCalendar';
 import { WorkHistoriesByMonthParam } from 'src/lib/api/work';
 import { requestWorkHistoriesByMonth, WorkHistories } from 'src/store/modules/work';
 
@@ -13,13 +13,14 @@ interface Props {
 
 interface State {
   selectedMonth: any;
+  selectedDate: Date;
 };
 
 class WorkHistoryContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state  = { selectedMonth: moment().format('YYYY-MM') }
+    this.state  = { selectedMonth: moment().format('YYYY-MM'), selectedDate: new Date() };
   }
 
   public componentDidMount() {
@@ -45,6 +46,10 @@ class WorkHistoryContainer extends React.Component<Props, State> {
     this.requestSelectedMonth();
   }
 
+  public handleChangeSelectedDay = (selectedDate: Date) => {
+    this.setState({ selectedDate });
+  }
+
   public requestSelectedMonth = () => {
     this.props.requestWorkHistoriesByMonth({ month: this.state.selectedMonth });
   }
@@ -57,6 +62,8 @@ class WorkHistoryContainer extends React.Component<Props, State> {
           selectMonth={this.state.selectedMonth}
           moveToNextMonth={this.moveToNextMonth}
           moveToPrevMonth={this.moveToPrevMonth}
+          selectedDate={this.state.selectedDate}
+          handleChangeSelectedDay={this.handleChangeSelectedDay}
         />
       </React.Fragment>
     );
