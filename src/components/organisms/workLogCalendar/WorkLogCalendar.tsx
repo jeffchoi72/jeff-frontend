@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Title from 'src/components/atom/title';
 import Calendar from 'src/components/lib/calendar';
 import WorkLogDetail from 'src/components/organisms/workLogDetail';
-import { WorkHistories } from 'src/store/modules/work';
+import { DetailWorkHistory, WorkHistories } from 'src/store/modules/work';
 
 interface Props {
   workHistories: WorkHistories,
@@ -13,6 +13,10 @@ interface Props {
   moveToPrevMonth: () => void;
   selectedDate: Date;
   handleChangeSelectedDay: (selectedDay: Date) => void;
+  detailWorkHistories: {
+    allWorkTime: number;
+    detailWorkHistories: DetailWorkHistory[];
+  };
 };
 
 const WorkLogCalendar: React.SFC<Props> = ({
@@ -22,6 +26,7 @@ const WorkLogCalendar: React.SFC<Props> = ({
   moveToPrevMonth,
   selectedDate,
   handleChangeSelectedDay,
+  detailWorkHistories,
 }) => {
   const CalendarWrap = styled.div`
     margin-top: 50px;
@@ -48,7 +53,7 @@ const WorkLogCalendar: React.SFC<Props> = ({
         />
       </CalendarWrap>
       <WorkLogDetailWrap>
-        <WorkLogDetail selectedDate={selectedDate} />
+        <WorkLogDetail selectedDate={selectedDate} detailWorkHistories={detailWorkHistories} />
       </WorkLogDetailWrap>
     </div>
   );

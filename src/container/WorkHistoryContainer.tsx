@@ -3,12 +3,14 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import WorkLogCalendar from 'src/components/organisms/workLogCalendar';
-import { WorkHistoriesByMonthParam } from 'src/lib/api/work';
-import { requestWorkHistoriesByMonth, WorkHistories } from 'src/store/modules/work';
+import { WorkHistoriesByDayParam, WorkHistoriesByMonthParam } from 'src/lib/api/work';
+import { DetailWorkHistories, requestWorkHistoriesByDay, requestWorkHistoriesByMonth, WorkHistories } from 'src/store/modules/work';
 
 interface Props {
   workHistories: WorkHistories;
+  detailWorkHistories: DetailWorkHistories;
   requestWorkHistoriesByMonth: ({ month }: WorkHistoriesByMonthParam) => {};
+  requestWorkHistoriesByDay: ({ month }: WorkHistoriesByDayParam) => {};
 };
 
 interface State {
@@ -24,8 +26,8 @@ class WorkHistoryContainer extends React.Component<Props, State> {
   }
 
   public componentDidMount() {
-    console.log('componentDidMount');
     this.requestSelectedMonth();
+    this.requestSelectedDay();
   }
 
   public moveToNextMonth = async () => {
@@ -46,12 +48,20 @@ class WorkHistoryContainer extends React.Component<Props, State> {
     this.requestSelectedMonth();
   }
 
-  public handleChangeSelectedDay = (selectedDate: Date) => {
-    this.setState({ selectedDate });
+  public handleChangeSelectedDay = async (selectedDate: Date) => {
+    await this.setState({ selectedDate });
+    this.requestSelectedDay();
   }
 
   public requestSelectedMonth = () => {
-    this.props.requestWorkHistoriesByMonth({ month: this.state.selectedMonth });
+    const { selectedMonth } = this.state;
+
+    this.props.requestWorkHistoriesByMonth({ month: selectedMonth });
+  }
+
+  public requestSelectedDay = () => {
+    const { selectedMonth, selectedDate } = this.state;
+    this.props.requestWorkHistoriesByDay({ month: selectedMonth, day: moment(selectedDate).format('DD')});
   }
 
   public render() {
@@ -64,21 +74,23 @@ class WorkHistoryContainer extends React.Component<Props, State> {
           moveToPrevMonth={this.moveToPrevMonth}
           selectedDate={this.state.selectedDate}
           handleChangeSelectedDay={this.handleChangeSelectedDay}
+          detailWorkHistories={this.props.detailWorkHistories.data}
         />
       </React.Fragment>
     );
-  };
-};
+  }};
 
 const mapStateToProps = ({ work }: any) => {
-  const { workHistories } = work;
+  const { workHistories, detailWorkHistories } = work;
   return {
     workHistories,
+    detailWorkHistories,
   };
 };
 
 const mapDispatchToProps = {
   requestWorkHistoriesByMonth,
+  requestWorkHistoriesByDay,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkHistoryContainer);
