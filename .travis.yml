@@ -9,7 +9,7 @@ before_install:
 script:
   - yarn build
 before_deploy:
-  - zip -r jeff-frontend build/**/*
+  - zip -r jeff-frontend *
   - mkdir -p deploy
   - mv jeff-frontend.zip deploy/jeff-frontend.zip
 branches:
