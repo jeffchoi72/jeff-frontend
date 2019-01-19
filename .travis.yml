@@ -9,6 +9,7 @@ before_install:
 script:
   - yarn build
 before_deploy:
+  - rm -rf node_modules
   - zip -r jeff-frontend *
   - mkdir -p deploy
   - mv jeff-frontend.zip deploy/jeff-frontend.zip
