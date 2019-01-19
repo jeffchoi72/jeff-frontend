@@ -1,0 +1,44 @@
+language: node_js
+node_js:
+  - "10.14"
+cache: yarn
+before_install:
+  - npm install -g yarn
+  - npm install -g typescript@3.2.2
+  - zip -r jeff-frontend build/**/*
+  - mkdir -p deploy
+  - mv jeff-frontend.zip deploy/jeff-frontend.zip
+script:
+  - yarn build
+branches:
+  only:
+    - master
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: jeff-service-bucket
+    region: ap-northeast-2
+    skip_cleanup: true
+    local_dir: deploy
+    wait-until-deployed: true
+    on:
+      repo: jeffchoi72/jeff-frontend #Github 주소
+      branch: master
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: jeff-service-bucket
+    key: jeff-frontend.zip
+    bundle_type: zip
+    application: jeff-service
+    deployment_group: jeff-service-group
+    region: ap-northeast-2
+    wait-until-deployed: true
+    on:
+      repo: jeffchoi72/jeff-frontend
+      branch: master
+notifications:
+  email:
+    recipients:
+      - dev.jeffchoi@gmail.com
