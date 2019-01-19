@@ -5,11 +5,13 @@ cache: yarn
 before_install:
   - npm install -g yarn
   - npm install -g typescript@3.2.2
+  - yarn install
+script:
+  - yarn build
+before_deploy:
   - zip -r jeff-frontend build/**/*
   - mkdir -p deploy
   - mv jeff-frontend.zip deploy/jeff-frontend.zip
-script:
-  - yarn build
 branches:
   only:
     - master
