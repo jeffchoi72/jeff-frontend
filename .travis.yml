@@ -35,7 +35,7 @@ deploy:
     key: jeff-frontend.zip
     bundle_type: zip
     application: jeff-service
-    deployment_group: jeff-service-group
+    deployment_group: jeff-frontend-group
     region: ap-northeast-2
     wait-until-deployed: true
     on:
