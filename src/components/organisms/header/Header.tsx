@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
+import { Link } from 'react-router-dom';
 import Logo from 'src/components/atom/logo';
 import * as Responsive from '../../../styles/responsive';
 
@@ -39,10 +40,18 @@ const Header: React.SFC<{}> = () => {
     }
   `;
 
+  const NavWrap = styled.div`
+      margin-top: 30px;
+      font-size: 18px;
+  `;
+
   return (
     <HeaderWrap>
       <HeaderContent>
         <Logo />
+        <NavWrap>
+          <Link to="/work/history">내 업무시간 보기</Link>
+        </NavWrap>
       </HeaderContent>
     </HeaderWrap>
   );
