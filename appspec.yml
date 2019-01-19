@@ -1,5 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source:  /
+  - source:  jeff-frontend.zip
     destination: /home/ubuntu/deployment/jeff-frontend/
+  - source:  jeff-backend.zip
+    destination: /home/ubuntu/deployment/jeff-backend/
